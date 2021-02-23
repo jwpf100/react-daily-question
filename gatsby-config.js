@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: "React-Daily-Question",
+    title: 'React-Daily-Question',
   },
+
   plugins: [],
-};
+}
