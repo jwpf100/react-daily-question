@@ -19,6 +19,17 @@ const Questions = () => {
     setQuestionMain(searchResult)
   }
 
+  const returnQuestionNoNumber = () => {
+    const searchTerm = `${questionNo.toString()}. ###`
+    const indexOfSearch = MdFile.indexOf(searchTerm)
+    const indexOfEndSearch = MdFile.indexOf(`?`, indexOfSearch) + 1
+    const searchResult = MdFile.substring(
+      indexOfSearch + searchTerm.length,
+      indexOfEndSearch
+    )
+    setQuestionMain(searchResult)
+  }
+
   const searchForQuestionMain = () => {
     const searchTerm = `${questionNo.toString()}. ###`
     const indexOfSearch = MdFile.indexOf(searchTerm)
@@ -33,7 +44,8 @@ const Questions = () => {
   // Formula to set a question number that will be displayed.  Used when page loads and again via a button.
   const generateQuestionNumber = () => {
     const maxQuestionNo = 300 // 329+1
-    setQuestionNo(Math.floor(Math.random() * maxQuestionNo + 1))
+    // setQuestionNo(Math.floor(Math.random() * maxQuestionNo + 1))
+    setQuestionNo(22)
   }
 
   useEffect(() => {
