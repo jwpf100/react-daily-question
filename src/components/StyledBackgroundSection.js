@@ -3,9 +3,8 @@ import { graphql, StaticQuery } from 'gatsby'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import BackgroundImage from 'gatsby-background-image'
-import StyledOverlayDiv from './StyledOverlayDiv'
 
-const BackgroundSection = ({ className }) => (
+const BackgroundSection = ({ children, className }) => (
   <StaticQuery
     query={graphql`
       query {
@@ -29,7 +28,7 @@ const BackgroundSection = ({ className }) => (
           critical
           fadeIn={false}
         >
-          <StyledOverlayDiv />
+          {children}
         </BackgroundImage>
       )
     }}
@@ -42,10 +41,12 @@ const StyledBackgroundSection = styled(BackgroundSection)`
   background-position: bottom center;
   background-repeat: no-repeat;
   background-size: cover;
+  color: white;
 `
 
 export default StyledBackgroundSection
 
 BackgroundSection.propTypes = {
   className: PropTypes.string,
+  children: PropTypes.object,
 }

@@ -1,38 +1,24 @@
 import * as React from 'react'
 
-import BackgroundImage from 'gatsby-background-image'
 import { graphql } from 'gatsby'
-import PropTypes from 'prop-types'
 import StyledBackgroundSection from '../components/StyledBackgroundSection'
+import StyledOverlayDiv from '../components/StyledOverlayDiv'
 import Layout from '../components/layout'
+import Question from '../components/Question'
+import StyledQuestion from '../components/StyledQuestion'
 import '../css/background-image.css'
 
 import SEO from '../components/seo'
 
-// styles
-const pageStyles = {
-  color: '#232129',
-  padding: '96px',
-  fontFamily: '-apple-system, Roboto, sans-serif, serif',
-}
-
 // markup
-const IndexPage = ({ data }) => (
+const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    {/* <BackgroundImage
-      className="masthead"
-      fluid={data.indexImage.childImageSharp.fluid}
-      fadeIn={false}
-      critical
-    >
-      <div className="black-overlay">
-        <div className="content-box">
-          <h1>This is a test</h1>
-        </div>
-      </div>
-    </BackgroundImage> */}
-    <StyledBackgroundSection />
+    <StyledBackgroundSection className="bg-image">
+      <StyledOverlayDiv className="bg-overlay">
+        <StyledQuestion className="container" />
+      </StyledOverlayDiv>
+    </StyledBackgroundSection>
   </Layout>
 )
 
@@ -50,6 +36,4 @@ export const pageQuery = graphql`
   }
 `
 
-IndexPage.propTypes = {
-  data: PropTypes.object,
-}
+IndexPage.propTypes = {}

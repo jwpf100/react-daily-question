@@ -17,6 +17,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "bootstrap": "^5.0.0-beta2",
     "gatsby": "^2.32.3",
     "gatsby-background-image": "^1.4.1",
     "gatsby-image": "^2.11.0",
