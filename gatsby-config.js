@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/react-daily-question',
   siteMetadata: {
     title: `React Question of the Day`,
     description: `A different React question every day! Sourced from https://github.com/sudheerj/reactjs-interview-questions.`,
