@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/react-daily-question',
   siteMetadata: {
     title: `React Question of the Day`,
     description: `A different React question every day! Sourced from https://github.com/sudheerj/reactjs-interview-questions.`,
@@ -13,6 +14,7 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+    `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
