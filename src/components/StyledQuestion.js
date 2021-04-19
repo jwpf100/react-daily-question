@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
 
+import { searchMaxNumber } from '../utlils/utils'
+
 const QuestionDiv = ({ className }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [mdFile, setMdFile] = useState('')
@@ -77,6 +79,13 @@ const QuestionDiv = ({ className }) => {
               onClick={returnAnswer}
             >
               Reveal Answer
+            </button>
+            <button
+              type="button"
+              className="btn btn-light"
+              onClick={() => console.log(searchMaxNumber(mdFile))}
+            >
+              Find Max Number
             </button>
           </div>
         </div>
