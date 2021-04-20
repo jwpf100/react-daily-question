@@ -13,7 +13,10 @@ const QuestionDiv = ({ className }) => {
   const [questionNo, setQuestionNo] = useState(0)
   const [questionText, setQuestionText] = useState('')
   const [totalQuestionArray, setTotalQuestionArray] = useState('')
-  const [answeredQuestionArray, setAnsweredQuestionArray] = useState('')
+  const [answeredQuestionArray, setAnsweredQuestionArray] = useState([
+    { number: 2, question: 'What are the major features of React?' },
+    { number: 36, question: 'How to create props proxy for HOC component?' },
+  ])
 
   const mdDocumentPath =
     'https://raw.githubusercontent.com/jwpf100/reactjs-interview-questions/master/README.md'
@@ -133,7 +136,10 @@ const QuestionDiv = ({ className }) => {
             >
               Clear Local Storage
             </button>
-            <QuestionListDisplay questionArray={totalQuestionArray} />
+            <QuestionListDisplay
+              questionArray={totalQuestionArray}
+              answeredArray={answeredQuestionArray}
+            />
           </div>
         </div>
       ) : (
