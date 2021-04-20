@@ -14,11 +14,9 @@ import SEO from '../components/seo'
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <StyledBackgroundSection className="bg-image">
-      <StyledOverlayDiv className="bg-overlay">
-        <StyledQuestion className="container" />
-      </StyledOverlayDiv>
-    </StyledBackgroundSection>
+    <StyledOverlayDiv className="bg-overlay">
+      <StyledQuestion className="container" />
+    </StyledOverlayDiv>
   </Layout>
 )
 
