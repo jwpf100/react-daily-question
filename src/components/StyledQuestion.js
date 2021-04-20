@@ -4,13 +4,15 @@ import PropTypes from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
 
-import { searchMaxNumber } from '../utlils/utils'
+import { createQuestionArray, searchMaxNumber } from '../utlils/utils'
 
 const QuestionDiv = ({ className }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [mdFile, setMdFile] = useState('')
   const [questionNo, setQuestionNo] = useState(0)
   const [questionText, setQuestionText] = useState('')
+  const [totalQuestionArray, setTotalQuestionArray] = useState('')
+  const [answeredQuestionArray, setAnsweredQuestionArray] = useState('')
 
   const mdDocumentPath =
     'https://raw.githubusercontent.com/jwpf100/reactjs-interview-questions/master/README.md'
@@ -39,6 +41,28 @@ const QuestionDiv = ({ className }) => {
     )
     const searchResult = mdFile.substring(indexOfSearch, indexOfEndSearch)
     setQuestionText(searchResult)
+  }
+
+  const createTotalQuestionArray = () => {
+    setTotalQuestionArray(createQuestionArray(mdFile))
+  }
+
+  const storeArrayLocally = () => {
+    // store questionArray in local storage
+    window.localStorage.setItem(
+      'totalQuestionArray',
+      JSON.stringify(totalQuestionArray)
+    )
+  }
+
+  const displayTotalQuestionArray = () => {
+    // store questionArray in local storage
+    console.log(JSON.parse(window.localStorage.getItem('totalQuestionArray')))
+  }
+
+  const clearLocalStorage = () => {
+    // store questionArray in local storage
+    window.localStorage.removeItem('totalQuestionArray')
   }
 
   useEffect(() => {
@@ -83,9 +107,30 @@ const QuestionDiv = ({ className }) => {
             <button
               type="button"
               className="btn btn-light"
-              onClick={() => console.log(searchMaxNumber(mdFile))}
+              onClick={createTotalQuestionArray}
             >
-              Find Max Number
+              Create Question Array
+            </button>
+            <button
+              type="button"
+              className="btn btn-light"
+              onClick={storeArrayLocally}
+            >
+              Store Total Array Locally
+            </button>
+            <button
+              type="button"
+              className="btn btn-light"
+              onClick={displayTotalQuestionArray}
+            >
+              Display Array in Console
+            </button>
+            <button
+              type="button"
+              className="btn btn-light"
+              onClick={clearLocalStorage}
+            >
+              Clear Local Storage
             </button>
           </div>
         </div>
