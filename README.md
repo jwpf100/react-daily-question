@@ -1,11 +1,29 @@
-Name
+## Name
 
-Description
+## Description
 
-Project Status
+## Project Status
 
-Project Screen Shots
+## Project Screen Shots
  
-Installation and Setup Instructions
+## Installation and Setup Instructions
 
-Reflection
+Clone down this repository. You will need node and npm installed globally on your machine.
+
+### Switch Branches:
+
+git switch main
+
+### Installation:
+
+npm install
+
+### To Start Gatsby Server:
+
+gatsby start
+
+### To Visit App:
+
+localhost:8000
+
+## Reflection
