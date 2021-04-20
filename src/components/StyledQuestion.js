@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
 
 import { createQuestionArray, searchMaxNumber } from '../utlils/utils'
+import QuestionListDisplay from './QuestionListDisplay/QuestionListDisplay'
 
 const QuestionDiv = ({ className }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -132,6 +133,7 @@ const QuestionDiv = ({ className }) => {
             >
               Clear Local Storage
             </button>
+            <QuestionListDisplay questionArray={totalQuestionArray} />
           </div>
         </div>
       ) : (

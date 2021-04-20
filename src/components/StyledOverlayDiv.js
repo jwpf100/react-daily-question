@@ -9,8 +9,8 @@ const OverlayDiv = ({ children, className }) => (
 const StyledOverlayDiv = styled(OverlayDiv)`
   display: -webkit-flex; /*  safari */
   display: flex;
-  background-color: rgba(0, 0, 0, 0.1);
-  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  min-height: 100vh;
   align-items: center;
   color: white;
 `
