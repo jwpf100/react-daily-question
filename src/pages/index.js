@@ -9,13 +9,15 @@ import StyledQuestion from '../components/StyledQuestion'
 import '../css/background-image.css'
 
 import SEO from '../components/seo'
+import StyledMainQuestionDisplay from '../components/MainQuestionDisplay/MainQuestionDisplay'
 
 // markup
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
     <StyledOverlayDiv className="bg-overlay">
-      <StyledQuestion className="container" />
+      {/* <StyledQuestion className="container" /> */}
+      <StyledMainQuestionDisplay />
     </StyledOverlayDiv>
   </Layout>
 )
