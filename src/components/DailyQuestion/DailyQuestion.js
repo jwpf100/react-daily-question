@@ -16,8 +16,6 @@ const DailyQuestion = ({ className, dailyQuestion }) => {
     dailyQuestion.number
   )
 
-  console.log(dailyQuestion.markdown)
-
   return (
     <div className={[className].join('')}>
       <ReactMarkdown

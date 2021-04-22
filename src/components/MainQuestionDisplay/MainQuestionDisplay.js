@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import FetchData from '../../hooks/FetchData'
-import { checkCurrentQuestionDate } from '../../utlils/utils'
+import {
+  checkCurrentQuestionDate,
+  generateRandomQuestionNumber,
+  extractQuestionOnly,
+  extractMdQuestionAndAnswer,
+} from '../../utlils/utils'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 
 const MainQuestionDisplay = ({ className }) => {
@@ -27,6 +32,38 @@ const MainQuestionDisplay = ({ className }) => {
       console.log('choose new question')
     }
   }
+
+  useEffect(() => {
+    if (
+      !loading &&
+      mdFile !== '' &&
+      !checkCurrentQuestionDate(currentQuestion.date)
+    ) {
+      /* &&
+      !checkCurrentQuestionDate(currentQuestion.date) */
+      console.log('change current question should fire')
+      const newQuestionNumber = generateRandomQuestionNumber(mdFile)
+
+      const date = new Date()
+      const question = extractQuestionOnly(mdFile, newQuestionNumber)
+
+      const markdown = extractMdQuestionAndAnswer(mdFile, newQuestionNumber)
+
+      setCurrentQuestion({
+        number: newQuestionNumber,
+        date,
+        question,
+        markdown,
+      })
+    }
+  }, [loading])
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      'currentQuestionLocal',
+      JSON.stringify(currentQuestion)
+    )
+  }, [currentQuestion])
 
   const testQuestionObject = {
     number: 2,
