@@ -87,4 +87,10 @@ const createQuestionArray = mdSource => {
   return questionArray
 }
 
-export { createQuestionArray, searchMaxNumber }
+const checkCurrentQuestionDate = date => {
+  const checkDate = new Date(date).setHours(0, 0, 0, 0)
+  const currentDate = new Date().setHours(0, 0, 0, 0)
+  return checkDate === currentDate
+}
+
+export { createQuestionArray, searchMaxNumber, checkCurrentQuestionDate }
