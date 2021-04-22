@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import FetchData from '../../hooks/FetchData'
 import { checkCurrentQuestionDate } from '../../utlils/utils'
+import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 
 const MainQuestionDisplay = ({ className }) => {
   const mdDocumentPath =
@@ -31,10 +32,18 @@ const MainQuestionDisplay = ({ className }) => {
     number: 2,
     question: 'What are the major features of React?',
     date: new Date(),
-    markdown: '2. ### What are the major features of React?',
+    markdown:
+      "2. ### What are inline conditional expressions?↵↵    You can use either *if statements* or *ternary expressions* which are available from JS to conditionally render expressions. Apart from these approaches, you can also embed any expressions in JSX by wrapping them in curly braces and then followed by JS logical operator `&&`.↵↵    ```jsx harmony↵    <h1>Hello!</h1>↵    {↵        messages.length > 0 && !isLogin?↵          <h2>↵              You have {messages.length} unread messages.↵          </h2>↵          :↵          <h2>↵              You don't have unread messages.↵          </h2>↵    }↵    ```↵↵↵   ",
   }
 
-  const testQuestionObject2 = {}
+  const testQuestionObject2 = {
+    markdown:
+      "17. ### What are inline conditional expressions?↵↵    You can use either *if statements* or *ternary expressions* which are available from JS to conditionally render expressions. Apart from these approaches, you can also embed any expressions in JSX by wrapping them in curly braces and then followed by JS logical operator `&&`.↵↵    ```jsx harmony↵    <h1>Hello!</h1>↵    {↵        messages.length > 0 && !isLogin?↵          <h2>↵              You have {messages.length} unread messages.↵          </h2>↵          :↵          <h2>↵              You don't have unread messages.↵          </h2>↵    }↵    ```↵↵↵   ",
+    number: 17,
+    question: 'What are inline conditional expressions?',
+  }
+
+  const testQuestionObject3 = {}
 
   const addCurrentQuestionLocally = questionObject => {
     window.localStorage.setItem(
@@ -51,58 +60,75 @@ const MainQuestionDisplay = ({ className }) => {
     console.log(handleCurrentQuestion())
   }
 
+  if (
+    Object.keys(currentQuestion).length > 0 &&
+    checkCurrentQuestionDate(currentQuestion.date)
+  ) {
+    return (
+      <div className={[className, 'container'].join(' ')}>
+        <h2 className="display-5">React Question of the Day</h2>
+        <h3>Current Question Present</h3>
+        <StyledDailyQuestion dailyQuestion={currentQuestion} />
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={checkCurrentQuestionDate}
+        >
+          Test
+        </button>
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={handleQuestion}
+        >
+          Set Current Question
+        </button>
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={() => {
+            console.log(currentQuestion)
+          }}
+        >
+          Console.log Current Question
+        </button>
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={() => addCurrentQuestionLocally(testQuestionObject3)}
+        >
+          Set Local Current Question
+        </button>
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={showCurrentQuestionLocally}
+        >
+          Console.log Local Current Question
+        </button>
+      </div>
+    )
+  }
+  if (!loading) {
+    return (
+      <div className={[className, 'container'].join(' ')}>
+        <h2 className="display-5">React Question of the Day</h2>
+        <h3>Data Has Loaded</h3>
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={() => addCurrentQuestionLocally(testQuestionObject)}
+        >
+          Set Local Current Question
+        </button>
+      </div>
+    )
+  }
   return (
-    <>
-      {!loading ? (
-        <div className={[className, 'container'].join(' ')}>
-          <h2 className="display-5">React Question of the Day</h2>
-          <h3>Data Has Loaded</h3>
-          <h4>{currentQuestion.question}</h4>
-          <button
-            type="button"
-            className="btn btn-light"
-            onClick={checkCurrentQuestionDate}
-          >
-            Test
-          </button>
-          <button
-            type="button"
-            className="btn btn-light"
-            onClick={handleQuestion}
-          >
-            Set Current Question
-          </button>
-          <button
-            type="button"
-            className="btn btn-light"
-            onClick={() => {
-              console.log(currentQuestion)
-            }}
-          >
-            Console.log Current Question
-          </button>
-          <button
-            type="button"
-            className="btn btn-light"
-            onClick={() => addCurrentQuestionLocally(testQuestionObject)}
-          >
-            Set Local Current Question
-          </button>
-          <button
-            type="button"
-            className="btn btn-light"
-            onClick={showCurrentQuestionLocally}
-          >
-            Console.log Local Current Question
-          </button>
-        </div>
-      ) : (
-        <div className={[className, 'container'].join(' ')}>
-          <h2 className="display-5">React Question of the Day</h2>
-          <h3>Data Is Loading</h3>
-        </div>
-      )}
-    </>
+    <div className={[className, 'container'].join(' ')}>
+      <h2 className="display-5">React Question of the Day</h2>
+      <h3>Data Is Loading</h3>
+    </div>
   )
 }
 

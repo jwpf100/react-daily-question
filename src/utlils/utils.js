@@ -14,6 +14,30 @@ const setSearchTerm = number => {
   return searchTerm
 }
 
+const setMdSearchTerm = number => {
+  const searchTerm = `${number.toString()}. ###`
+  return searchTerm
+}
+
+const extractMdQuestionOnly = (mdSource, questionNumber) => {
+  const mdSearchTerm = setMdSearchTerm(questionNumber)
+  const indexOfSearch = mdSource.indexOf(mdSearchTerm)
+  const indexOfEndSearch = mdSource.indexOf(`?`, indexOfSearch)
+  return mdSource.substring(indexOfSearch, indexOfEndSearch + 1)
+}
+
+const extractMdQuestionAndAnswer = (mdSource, questionNumber) => {
+  const mdSearchTerm = setMdSearchTerm(questionNumber)
+  console.log(``)
+  const indexOfSearch = mdSource.indexOf(mdSearchTerm)
+  console.log(``)
+  const indexOfEndSearch = mdSource.indexOf(
+    `**[⬆ Back to Top](#table-of-contents)**`,
+    indexOfSearch
+  )
+  return mdSource.substring(indexOfSearch, indexOfEndSearch)
+}
+
 const searchMaxNumber = mdSource => {
   const indexOfQ1 = mdSource.indexOf(setSearchTerm(1))
   let maxNumber = 0
@@ -93,4 +117,10 @@ const checkCurrentQuestionDate = date => {
   return checkDate === currentDate
 }
 
-export { createQuestionArray, searchMaxNumber, checkCurrentQuestionDate }
+export {
+  createQuestionArray,
+  searchMaxNumber,
+  checkCurrentQuestionDate,
+  extractMdQuestionOnly,
+  extractMdQuestionAndAnswer,
+}

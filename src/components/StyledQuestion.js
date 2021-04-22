@@ -111,6 +111,15 @@ const QuestionDiv = ({ className }) => {
             <button
               type="button"
               className="btn btn-light"
+              onClick={() => {
+                console.log(questionText)
+              }}
+            >
+              Show MD Text in Console
+            </button>
+            <button
+              type="button"
+              className="btn btn-light"
               onClick={createTotalQuestionArray}
             >
               Create Question Array
