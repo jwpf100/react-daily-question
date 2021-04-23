@@ -9,4 +9,11 @@ const showCurrentQuestionLocally = () => {
   console.log(JSON.parse(window.localStorage.getItem('currentQuestionLocal')))
 }
 
-export { addCurrentQuestionLocally, showCurrentQuestionLocally }
+const getCurrentQuestionLocally = () =>
+  JSON.parse(window.localStorage.getItem('currentQuestionLocal'))
+
+export {
+  getCurrentQuestionLocally,
+  addCurrentQuestionLocally,
+  showCurrentQuestionLocally,
+}

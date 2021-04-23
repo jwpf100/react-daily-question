@@ -8,18 +8,25 @@ import {
   extractQuestionOnly,
   extractMdQuestionAndAnswer,
 } from '../../utlils/utils'
-import { addCurrentQuestionLocally } from '../../utlils/localStorage'
+import {
+  addCurrentQuestionLocally,
+  getCurrentQuestionLocally,
+} from '../../utlils/localStorage'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 import TestingSection from '../TestingSection/TestingSection'
 
 const MainQuestionDisplay = ({ className }) => {
   const mdDocumentPath =
     'https://raw.githubusercontent.com/jwpf100/reactjs-interview-questions/master/README.md'
+
   // Custom hook to bring in MD Data
   const { mdFile, loading, error } = FetchData(mdDocumentPath)
+  // Set current question initially from local storage
   const [currentQuestion, setCurrentQuestion] = useState(
-    JSON.parse(window.localStorage.getItem('currentQuestionLocal'))
+    getCurrentQuestionLocally()
   )
+
+  // JSON.parse(window.localStorage.getItem('currentQuestionLocal'))
 
   useEffect(() => {
     if (
