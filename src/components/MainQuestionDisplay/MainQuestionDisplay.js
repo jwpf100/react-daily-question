@@ -29,11 +29,12 @@ const MainQuestionDisplay = ({ className }) => {
   const [currentQuestion, setCurrentQuestion] = useState(
     getCurrentQuestionLocally()
   )
+  // Set seen question array initially from local storage
   const [seenQuestionArray, setSeenQuestionArray] = useState(
     checkListOfQuestionsSeen()
   )
 
-  // Check for no loading tag, mdFile to be populated, currentQuestion date to be DIFFERENT to current date (i.e. need a new question) and then set the current question to a new random question.
+  // Check for loading to finish, mdFile to be populated, currentQuestion date to be DIFFERENT to current date (i.e. need a new question) and then set the current question to a new random question.
 
   useEffect(() => {
     if (
@@ -51,10 +52,14 @@ const MainQuestionDisplay = ({ className }) => {
     }
   }, [loading])
 
+  // When currentQuesiton changes, add that question to local storage and to the seenquestion array
+
   useEffect(() => {
     addCurrentQuestionLocally(currentQuestion)
     setSeenQuestionArray(pushToArray(currentQuestion, seenQuestionArray))
   }, [currentQuestion])
+
+  // When the seen question array gets updated, add to local storage
 
   useEffect(() => {
     addSeenQuestionArrayLocally(seenQuestionArray)
@@ -68,7 +73,11 @@ const MainQuestionDisplay = ({ className }) => {
       <div className={[className, 'container'].join(' ')}>
         <h2 className="display-5">React Question of the Day</h2>
         <h3>Current Question Present</h3>
-        <StyledDailyQuestion dailyQuestion={currentQuestion} />
+        <StyledDailyQuestion
+          dailyQuestion={currentQuestion}
+          setCurrentQuestion={setCurrentQuestion}
+          mdSource={mdFile}
+        />
         <TestingSection
           currentQuestion={currentQuestion}
           seenQuestionArray={seenQuestionArray}

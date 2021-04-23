@@ -1,5 +1,20 @@
+import {
+  checkCurrentQuestionDate,
+  generateRandomQuestionNumber,
+  extractQuestionOnly,
+  extractMdQuestionAndAnswer,
+} from './utils'
+
 // Get a new current question
-const newQuestion = () => {}
+const newQuestion = (mdSource, setCurrentQuestion) => {
+  const newQuestionNumber = generateRandomQuestionNumber(mdSource)
+  setCurrentQuestion({
+    number: newQuestionNumber,
+    date: new Date(),
+    question: extractQuestionOnly(mdSource, newQuestionNumber),
+    markdown: extractMdQuestionAndAnswer(mdSource, newQuestionNumber),
+  })
+}
 
 // push to array unless already present
 
@@ -16,4 +31,4 @@ const pushToArray = (question, array) => {
   return array
 }
 
-export { pushToArray }
+export { pushToArray, newQuestion }

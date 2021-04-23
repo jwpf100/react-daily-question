@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
-import {
-  extractMdQuestionOnly,
-  extractMdQuestionAndAnswer,
-} from '../../utlils/utils'
+import { extractMdQuestionOnly } from '../../utlils/utils'
+import { newQuestion } from '../../utlils/questionArrays'
 
-const DailyQuestion = ({ className, dailyQuestion }) => {
+const DailyQuestion = ({
+  className,
+  dailyQuestion,
+  setCurrentQuestion,
+  mdSource,
+}) => {
   const [questionOnly, setQuestionOnly] = useState(true)
 
   const questionMd = extractMdQuestionOnly(
@@ -18,10 +21,6 @@ const DailyQuestion = ({ className, dailyQuestion }) => {
 
   return (
     <div className={[className].join('')}>
-      <ReactMarkdown
-        plugins={[[gfm, { singleTilde: false }]]}
-        source={questionOnly ? questionMd : dailyQuestion.markdown}
-      />
       <button
         type="button"
         className="btn btn-light"
@@ -31,6 +30,19 @@ const DailyQuestion = ({ className, dailyQuestion }) => {
       >
         Reveal Answer
       </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={() => {
+          newQuestion(mdSource, setCurrentQuestion)
+        }}
+      >
+        Select New Question
+      </button>
+      <ReactMarkdown
+        plugins={[[gfm, { singleTilde: false }]]}
+        source={questionOnly ? questionMd : dailyQuestion.markdown}
+      />
     </div>
   )
 }
@@ -54,4 +66,6 @@ export default StyledDailyQuestion
 DailyQuestion.propTypes = {
   className: PropTypes.string,
   dailyQuestion: PropTypes.object,
+  setCurrentQuestion: PropTypes.func,
+  mdSource: PropTypes.string,
 }
