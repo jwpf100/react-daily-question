@@ -65,9 +65,9 @@ const extractMdQuestionOnly = (mdSource, questionNumber) => {
 
 const extractMdQuestionAndAnswer = (mdSource, questionNumber) => {
   const mdSearchTerm = setMdSearchTerm(questionNumber)
-  console.log(``)
+
   const indexOfSearch = mdSource.indexOf(mdSearchTerm)
-  console.log(``)
+
   const indexOfEndSearch = mdSource.indexOf(
     `**[⬆ Back to Top](#table-of-contents)**`,
     indexOfSearch

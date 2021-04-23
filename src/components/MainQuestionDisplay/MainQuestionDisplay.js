@@ -77,10 +77,12 @@ const MainQuestionDisplay = ({ className }) => {
           dailyQuestion={currentQuestion}
           setCurrentQuestion={setCurrentQuestion}
           mdSource={mdFile}
+          seenQuestionArray={seenQuestionArray}
         />
         <TestingSection
           currentQuestion={currentQuestion}
           seenQuestionArray={seenQuestionArray}
+          mdSource={mdFile}
         />
       </div>
     )
