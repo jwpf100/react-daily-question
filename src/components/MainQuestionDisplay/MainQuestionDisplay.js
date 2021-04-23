@@ -8,10 +8,7 @@ import {
   extractQuestionOnly,
   extractMdQuestionAndAnswer,
 } from '../../utlils/utils'
-import {
-  addCurrentQuestionLocally,
-  showCurrentQuestionLocally,
-} from '../../utlils/localStorage'
+import { addCurrentQuestionLocally } from '../../utlils/localStorage'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 import TestingSection from '../TestingSection/TestingSection'
 
@@ -50,10 +47,7 @@ const MainQuestionDisplay = ({ className }) => {
   }, [loading])
 
   useEffect(() => {
-    window.localStorage.setItem(
-      'currentQuestionLocal',
-      JSON.stringify(currentQuestion)
-    )
+    addCurrentQuestionLocally(currentQuestion)
   }, [currentQuestion])
 
   if (
