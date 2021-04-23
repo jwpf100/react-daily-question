@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 const FetchData = initUrl => {
-  const [data, setData] = useState('')
+  const [mdFile, setMdFile] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState({})
 
@@ -12,7 +12,7 @@ const FetchData = initUrl => {
       try {
         setError({})
         const result = await fetch(initUrl).then(response => response.text())
-        if (!ignore) setData(result)
+        if (!ignore) setMdFile(result)
       } catch (err) {
         setError(err)
       }
@@ -24,7 +24,7 @@ const FetchData = initUrl => {
     }
   }, [initUrl])
 
-  return { data, loading, error }
+  return { mdFile, loading, error }
 }
 
 export default FetchData

@@ -1,10 +1,7 @@
 import * as React from 'react'
-
 import { graphql } from 'gatsby'
-import StyledBackgroundSection from '../components/StyledBackgroundSection'
 import StyledOverlayDiv from '../components/StyledOverlayDiv'
 import Layout from '../components/layout'
-import Question from '../components/Question'
 import StyledQuestion from '../components/StyledQuestion'
 import '../css/background-image.css'
 
