@@ -8,6 +8,10 @@ import {
   extractQuestionOnly,
   extractMdQuestionAndAnswer,
 } from '../../utlils/utils'
+import {
+  addCurrentQuestionLocally,
+  showCurrentQuestionLocally,
+} from '../../utlils/localStorage'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 
 const MainQuestionDisplay = ({ className }) => {
@@ -18,20 +22,6 @@ const MainQuestionDisplay = ({ className }) => {
   const [currentQuestion, setCurrentQuestion] = useState(
     JSON.parse(window.localStorage.getItem('currentQuestionLocal'))
   )
-
-  const handleCurrentQuestion = () => {
-    // Test for a currentquestion
-    if (
-      Object.keys(currentQuestion).length > 0 &&
-      checkCurrentQuestionDate(currentQuestion.date)
-    ) {
-      // displayQuestion
-      console.log('display question')
-    } else {
-      // choose a new question
-      console.log('choose new question')
-    }
-  }
 
   useEffect(() => {
     if (
@@ -82,15 +72,12 @@ const MainQuestionDisplay = ({ className }) => {
 
   const testQuestionObject3 = {}
 
-  const addCurrentQuestionLocally = questionObject => {
-    window.localStorage.setItem(
-      'currentQuestionLocal',
-      JSON.stringify(questionObject)
-    )
-  }
-
-  const showCurrentQuestionLocally = questionObject => {
-    console.log(JSON.parse(window.localStorage.getItem('currentQuestionLocal')))
+  const testQuestionObject4 = {
+    number: 2,
+    question: 'What are the major features of React?',
+    date: new Date('2018-05-05'),
+    markdown:
+      "2. ### What are inline conditional expressions?↵↵    You can use either *if statements* or *ternary expressions* which are available from JS to conditionally render expressions. Apart from these approaches, you can also embed any expressions in JSX by wrapping them in curly braces and then followed by JS logical operator `&&`.↵↵    ```jsx harmony↵    <h1>Hello!</h1>↵    {↵        messages.length > 0 && !isLogin?↵          <h2>↵              You have {messages.length} unread messages.↵          </h2>↵          :↵          <h2>↵              You don't have unread messages.↵          </h2>↵    }↵    ```↵↵↵   ",
   }
 
   const handleQuestion = () => {
@@ -132,7 +119,7 @@ const MainQuestionDisplay = ({ className }) => {
         <button
           type="button"
           className="btn btn-light"
-          onClick={() => addCurrentQuestionLocally(testQuestionObject3)}
+          onClick={() => addCurrentQuestionLocally(testQuestionObject4)}
         >
           Set Local Current Question
         </button>
