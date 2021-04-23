@@ -8,7 +8,12 @@ import {
   generateUniqueRandomQuestionNumber,
 } from '../../utlils/questionArrays'
 
-const TestingSection = ({ currentQuestion, seenQuestionArray, mdSource }) => {
+const TestingSection = ({
+  currentQuestion,
+  seenQuestionArray,
+  mdSource,
+  questionArray,
+}) => {
   const testQuestionObject = {
     number: 2,
     question: 'What are the major features of React?',
@@ -44,6 +49,10 @@ const TestingSection = ({ currentQuestion, seenQuestionArray, mdSource }) => {
 
   const handleUniqueNumber = () => {
     console.log(generateUniqueRandomQuestionNumber(mdSource, seenQuestionArray))
+  }
+
+  const showQuestionArray = () => {
+    console.log(questionArray)
   }
 
   return (
@@ -86,6 +95,13 @@ const TestingSection = ({ currentQuestion, seenQuestionArray, mdSource }) => {
         onClick={handleUniqueNumber}
       >
         Generate Random handleUniqueNumber
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={showQuestionArray}
+      >
+        Show Total Question Array
       </button>
     </div>
   )

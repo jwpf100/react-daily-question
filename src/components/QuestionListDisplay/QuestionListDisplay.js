@@ -11,15 +11,17 @@ const QuestionListDisplay = ({ questionArray, answeredArray, className }) => (
       <div className={['d-flex flex-wrap', className].join(' ')}>
         <h3 className="w-100 text-center">Questions</h3>
         {/* Map through full question list.  If the question is also in the answeredArray turn it green. */}
-        {questionArray.map(newQuestion => {
+        {questionArray.map((newQuestion, index) => {
           if (
             answeredArray.find(
               ({ question }) => question === newQuestion.question
             )
           ) {
-            return <StyledQuestionButton question={newQuestion} seen />
+            return (
+              <StyledQuestionButton key={index} question={newQuestion} seen />
+            )
           }
-          return <StyledQuestionButton question={newQuestion} />
+          return <StyledQuestionButton key={index} question={newQuestion} />
         })}
       </div>
     )}

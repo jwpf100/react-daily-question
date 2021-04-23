@@ -4,9 +4,7 @@ import PropTypes from 'prop-types'
 import FetchData from '../../hooks/FetchData'
 import {
   checkCurrentQuestionDate,
-  generateRandomQuestionNumber,
-  extractQuestionOnly,
-  extractMdQuestionAndAnswer,
+  createQuestionArray,
 } from '../../utlils/utils'
 import {
   addCurrentQuestionLocally,
@@ -14,7 +12,7 @@ import {
   checkListOfQuestionsSeen,
   addSeenQuestionArrayLocally,
 } from '../../utlils/localStorage'
-import { pushToArray } from '../../utlils/questionArrays'
+import { newQuestion, pushToArray } from '../../utlils/questionArrays'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 import TestingSection from '../TestingSection/TestingSection'
 import QuestionlistDisplay from '../QuestionListDisplay'
@@ -33,22 +31,21 @@ const MainQuestionDisplay = ({ className }) => {
   const [seenQuestionArray, setSeenQuestionArray] = useState(
     checkListOfQuestionsSeen()
   )
+  const [allQuestionArray, setAllQuestionArray] = useState([])
 
   // Check for loading to finish, mdFile to be populated, currentQuestion date to be DIFFERENT to current date (i.e. need a new question) and then set the current question to a new random question.
 
   useEffect(() => {
+    if (!loading && mdFile !== '') {
+      setAllQuestionArray(createQuestionArray(mdFile))
+    }
+
     if (
       !loading &&
       mdFile !== '' &&
       !checkCurrentQuestionDate(currentQuestion.date)
     ) {
-      const newQuestionNumber = generateRandomQuestionNumber(mdFile)
-      setCurrentQuestion({
-        number: newQuestionNumber,
-        date: new Date(),
-        question: extractQuestionOnly(mdFile, newQuestionNumber),
-        markdown: extractMdQuestionAndAnswer(mdFile, newQuestionNumber),
-      })
+      newQuestion(mdFile, setCurrentQuestion, seenQuestionArray)
     }
   }, [loading])
 
@@ -78,6 +75,10 @@ const MainQuestionDisplay = ({ className }) => {
           setCurrentQuestion={setCurrentQuestion}
           mdSource={mdFile}
           seenQuestionArray={seenQuestionArray}
+        />
+        <QuestionlistDisplay
+          questionArray={allQuestionArray}
+          answeredArray={seenQuestionArray}
         />
         <TestingSection
           currentQuestion={currentQuestion}

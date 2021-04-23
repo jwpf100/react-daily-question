@@ -69,4 +69,5 @@ DailyQuestion.propTypes = {
   dailyQuestion: PropTypes.object,
   setCurrentQuestion: PropTypes.func,
   mdSource: PropTypes.string,
+  seenQuestionArray: PropTypes.array,
 }
