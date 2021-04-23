@@ -3,7 +3,11 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import {
   addCurrentQuestionLocally,
+  getCurrentQuestionLocally,
   showCurrentQuestionLocally,
+  getListOfQuestionsSeen,
+  removeListOfQuestionsSeen,
+  addSeenQuestionArrayLocally,
 } from '../../utlils/localStorage'
 
 const TestingSection = ({ currentQuestion }) => {
@@ -32,6 +36,23 @@ const TestingSection = ({ currentQuestion }) => {
       "2. ### What are inline conditional expressions?↵↵    You can use either *if statements* or *ternary expressions* which are available from JS to conditionally render expressions. Apart from these approaches, you can also embed any expressions in JSX by wrapping them in curly braces and then followed by JS logical operator `&&`.↵↵    ```jsx harmony↵    <h1>Hello!</h1>↵    {↵        messages.length > 0 && !isLogin?↵          <h2>↵              You have {messages.length} unread messages.↵          </h2>↵          :↵          <h2>↵              You don't have unread messages.↵          </h2>↵    }↵    ```↵↵↵   ",
   }
 
+  const seenQuestionArrayTest = [
+    { number: 2, question: 'What are the major features of React?' },
+    { number: 36, question: 'How to create props proxy for HOC component?' },
+  ]
+
+  const handleAddSeenQArray = () => {
+    addSeenQuestionArrayLocally(seenQuestionArrayTest)
+  }
+
+  const handleRemoveSeenQArray = () => {
+    removeListOfQuestionsSeen()
+  }
+
+  const handleGetSeenQArray = () => {
+    console.log(getListOfQuestionsSeen())
+  }
+
   return (
     <div>
       <button
@@ -56,6 +77,27 @@ const TestingSection = ({ currentQuestion }) => {
         onClick={showCurrentQuestionLocally}
       >
         Console.log Local Current Question
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={handleAddSeenQArray}
+      >
+        Add seen question array to local
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={handleRemoveSeenQArray}
+      >
+        Remove seen question array from local
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={handleGetSeenQArray}
+      >
+        Get seen question array from local and console log
       </button>
     </div>
   )

@@ -14,6 +14,7 @@ import {
 } from '../../utlils/localStorage'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 import TestingSection from '../TestingSection/TestingSection'
+import QuestionlistDisplay from '../QuestionListDisplay'
 
 const MainQuestionDisplay = ({ className }) => {
   const mdDocumentPath =
@@ -25,6 +26,7 @@ const MainQuestionDisplay = ({ className }) => {
   const [currentQuestion, setCurrentQuestion] = useState(
     getCurrentQuestionLocally()
   )
+  const [answeredQuestionArray, setAnsweredQuestionArray] = useState([])
 
   // JSON.parse(window.localStorage.getItem('currentQuestionLocal'))
 
