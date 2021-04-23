@@ -99,7 +99,6 @@ const searchMaxNumber = mdSource => {
 
 const generateRandomQuestionNumber = mdSource => {
   const maxQuestionNo = searchMaxNumber(mdSource)
-  console.log(maxQuestionNo)
   return Math.floor(Math.random() * maxQuestionNo + 1)
 }
 

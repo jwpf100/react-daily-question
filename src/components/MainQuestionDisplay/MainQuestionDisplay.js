@@ -8,18 +8,33 @@ import {
   extractQuestionOnly,
   extractMdQuestionAndAnswer,
 } from '../../utlils/utils'
-import { addCurrentQuestionLocally } from '../../utlils/localStorage'
+import {
+  addCurrentQuestionLocally,
+  getCurrentQuestionLocally,
+  checkListOfQuestionsSeen,
+  addSeenQuestionArrayLocally,
+} from '../../utlils/localStorage'
+import { pushToArray } from '../../utlils/questionArrays'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 import TestingSection from '../TestingSection/TestingSection'
+import QuestionlistDisplay from '../QuestionListDisplay'
 
 const MainQuestionDisplay = ({ className }) => {
   const mdDocumentPath =
     'https://raw.githubusercontent.com/jwpf100/reactjs-interview-questions/master/README.md'
+
   // Custom hook to bring in MD Data
   const { mdFile, loading, error } = FetchData(mdDocumentPath)
+  // Set current question initially from local storage
   const [currentQuestion, setCurrentQuestion] = useState(
-    JSON.parse(window.localStorage.getItem('currentQuestionLocal'))
+    getCurrentQuestionLocally()
   )
+  // Set seen question array initially from local storage
+  const [seenQuestionArray, setSeenQuestionArray] = useState(
+    checkListOfQuestionsSeen()
+  )
+
+  // Check for loading to finish, mdFile to be populated, currentQuestion date to be DIFFERENT to current date (i.e. need a new question) and then set the current question to a new random question.
 
   useEffect(() => {
     if (
@@ -27,28 +42,28 @@ const MainQuestionDisplay = ({ className }) => {
       mdFile !== '' &&
       !checkCurrentQuestionDate(currentQuestion.date)
     ) {
-      /* &&
-      !checkCurrentQuestionDate(currentQuestion.date) */
-      console.log('change current question should fire')
       const newQuestionNumber = generateRandomQuestionNumber(mdFile)
-
-      const date = new Date()
-      const question = extractQuestionOnly(mdFile, newQuestionNumber)
-
-      const markdown = extractMdQuestionAndAnswer(mdFile, newQuestionNumber)
-
       setCurrentQuestion({
         number: newQuestionNumber,
-        date,
-        question,
-        markdown,
+        date: new Date(),
+        question: extractQuestionOnly(mdFile, newQuestionNumber),
+        markdown: extractMdQuestionAndAnswer(mdFile, newQuestionNumber),
       })
     }
   }, [loading])
 
+  // When currentQuesiton changes, add that question to local storage and to the seenquestion array
+
   useEffect(() => {
     addCurrentQuestionLocally(currentQuestion)
+    setSeenQuestionArray(pushToArray(currentQuestion, seenQuestionArray))
   }, [currentQuestion])
+
+  // When the seen question array gets updated, add to local storage
+
+  useEffect(() => {
+    addSeenQuestionArrayLocally(seenQuestionArray)
+  }, [seenQuestionArray])
 
   if (
     Object.keys(currentQuestion).length > 0 &&
@@ -58,8 +73,15 @@ const MainQuestionDisplay = ({ className }) => {
       <div className={[className, 'container'].join(' ')}>
         <h2 className="display-5">React Question of the Day</h2>
         <h3>Current Question Present</h3>
-        <StyledDailyQuestion dailyQuestion={currentQuestion} />
-        <TestingSection currentQuestion={currentQuestion} />
+        <StyledDailyQuestion
+          dailyQuestion={currentQuestion}
+          setCurrentQuestion={setCurrentQuestion}
+          mdSource={mdFile}
+        />
+        <TestingSection
+          currentQuestion={currentQuestion}
+          seenQuestionArray={seenQuestionArray}
+        />
       </div>
     )
   }

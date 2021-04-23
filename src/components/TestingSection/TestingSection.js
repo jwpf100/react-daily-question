@@ -3,10 +3,16 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import {
   addCurrentQuestionLocally,
+  getCurrentQuestionLocally,
   showCurrentQuestionLocally,
+  removeListOfQuestionsSeen,
+  addSeenQuestionArrayLocally,
+  checkListOfQuestionsSeen,
 } from '../../utlils/localStorage'
 
-const TestingSection = ({ currentQuestion }) => {
+import { pushToSeenQuestionArray } from '../../utlils/questionArrays'
+
+const TestingSection = ({ currentQuestion, seenQuestionArray }) => {
   const testQuestionObject = {
     number: 2,
     question: 'What are the major features of React?',
@@ -32,6 +38,31 @@ const TestingSection = ({ currentQuestion }) => {
       "2. ### What are inline conditional expressions?↵↵    You can use either *if statements* or *ternary expressions* which are available from JS to conditionally render expressions. Apart from these approaches, you can also embed any expressions in JSX by wrapping them in curly braces and then followed by JS logical operator `&&`.↵↵    ```jsx harmony↵    <h1>Hello!</h1>↵    {↵        messages.length > 0 && !isLogin?↵          <h2>↵              You have {messages.length} unread messages.↵          </h2>↵          :↵          <h2>↵              You don't have unread messages.↵          </h2>↵    }↵    ```↵↵↵   ",
   }
 
+  const seenQuestionArrayTest = [
+    { number: 2, question: 'What are the major features of React?' },
+    { number: 36, question: 'How to create props proxy for HOC component?' },
+  ]
+
+  const handleAddSeenQArray = () => {
+    addSeenQuestionArrayLocally(seenQuestionArrayTest)
+  }
+
+  const handleRemoveSeenQArray = () => {
+    removeListOfQuestionsSeen()
+  }
+
+  const handleGetSeenQArray = () => {
+    console.log(checkListOfQuestionsSeen())
+  }
+
+  const pushToSeenQArray = () => {
+    seenQuestionArray.push(currentQuestion)
+  }
+
+  const checkAndPushToArray = () => {
+    pushToSeenQuestionArray(currentQuestion, seenQuestionArray)
+  }
+
   return (
     <div>
       <button
@@ -46,16 +77,46 @@ const TestingSection = ({ currentQuestion }) => {
       <button
         type="button"
         className="btn btn-light"
-        onClick={() => addCurrentQuestionLocally(testQuestionObject4)}
+        onClick={handleAddSeenQArray}
       >
-        Set Local Current Question
+        Add seen question array to local
       </button>
       <button
         type="button"
         className="btn btn-light"
-        onClick={showCurrentQuestionLocally}
+        onClick={handleRemoveSeenQArray}
       >
-        Console.log Local Current Question
+        Remove seen question array from local
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={handleGetSeenQArray}
+      >
+        Get seen question array from local and console log
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={() => {
+          console.log(seenQuestionArray)
+        }}
+      >
+        Console.log seenQuestionArray
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={pushToSeenQArray}
+      >
+        Push to seenQuestionArray
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={checkAndPushToArray}
+      >
+        Check if present in seenQuestionArray
       </button>
     </div>
   )
