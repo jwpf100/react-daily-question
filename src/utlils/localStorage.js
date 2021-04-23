@@ -8,20 +8,23 @@ const addCurrentQuestionLocally = questionObject => {
 const getCurrentQuestionLocally = () =>
   JSON.parse(window.localStorage.getItem('currentQuestionLocal'))
 
-const getListOfQuestionsSeen = () =>
-  JSON.parse(window.localStorage.getItem('seenQuestionArrayLocal'))
+const checkListOfQuestionsSeen = () => {
+  const getListOfQuestionsSeen = () =>
+    JSON.parse(window.localStorage.getItem('seenQuestionArrayLocal'))
+
+  return getListOfQuestionsSeen() === null ? [] : getListOfQuestionsSeen()
+}
+
+// Push to seenQuestionArrayLocal
+
+const addSeenQuestionArrayLocally = array => {
+  window.localStorage.setItem('seenQuestionArrayLocal', JSON.stringify(array))
+}
 
 // For testing
 
-const addSeenQuestionArrayLocally = questionArray => {
-  window.localStorage.setItem(
-    'seenQuestionArrayLocal',
-    JSON.stringify(questionArray)
-  )
-}
-
 const removeListOfQuestionsSeen = () =>
-  JSON.parse(window.localStorage.removeItem('seenQuestionArrayLocal'))
+  window.localStorage.removeItem('seenQuestionArrayLocal')
 
 const showCurrentQuestionLocally = () => {
   console.log(JSON.parse(window.localStorage.getItem('currentQuestionLocal')))
@@ -31,7 +34,7 @@ export {
   addCurrentQuestionLocally,
   getCurrentQuestionLocally,
   showCurrentQuestionLocally,
-  getListOfQuestionsSeen,
   removeListOfQuestionsSeen,
   addSeenQuestionArrayLocally,
+  checkListOfQuestionsSeen,
 }

@@ -11,7 +11,10 @@ import {
 import {
   addCurrentQuestionLocally,
   getCurrentQuestionLocally,
+  checkListOfQuestionsSeen,
+  addSeenQuestionArrayLocally,
 } from '../../utlils/localStorage'
+import { pushToArray } from '../../utlils/questionArrays'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 import TestingSection from '../TestingSection/TestingSection'
 import QuestionlistDisplay from '../QuestionListDisplay'
@@ -26,9 +29,11 @@ const MainQuestionDisplay = ({ className }) => {
   const [currentQuestion, setCurrentQuestion] = useState(
     getCurrentQuestionLocally()
   )
-  const [answeredQuestionArray, setAnsweredQuestionArray] = useState([])
+  const [seenQuestionArray, setSeenQuestionArray] = useState(
+    checkListOfQuestionsSeen()
+  )
 
-  // JSON.parse(window.localStorage.getItem('currentQuestionLocal'))
+  // Check for no loading tag, mdFile to be populated, currentQuestion date to be DIFFERENT to current date (i.e. need a new question) and then set the current question to a new random question.
 
   useEffect(() => {
     if (
@@ -36,28 +41,24 @@ const MainQuestionDisplay = ({ className }) => {
       mdFile !== '' &&
       !checkCurrentQuestionDate(currentQuestion.date)
     ) {
-      /* &&
-      !checkCurrentQuestionDate(currentQuestion.date) */
-      console.log('change current question should fire')
       const newQuestionNumber = generateRandomQuestionNumber(mdFile)
-
-      const date = new Date()
-      const question = extractQuestionOnly(mdFile, newQuestionNumber)
-
-      const markdown = extractMdQuestionAndAnswer(mdFile, newQuestionNumber)
-
       setCurrentQuestion({
         number: newQuestionNumber,
-        date,
-        question,
-        markdown,
+        date: new Date(),
+        question: extractQuestionOnly(mdFile, newQuestionNumber),
+        markdown: extractMdQuestionAndAnswer(mdFile, newQuestionNumber),
       })
     }
   }, [loading])
 
   useEffect(() => {
     addCurrentQuestionLocally(currentQuestion)
+    setSeenQuestionArray(pushToArray(currentQuestion, seenQuestionArray))
   }, [currentQuestion])
+
+  useEffect(() => {
+    addSeenQuestionArrayLocally(seenQuestionArray)
+  }, [seenQuestionArray])
 
   if (
     Object.keys(currentQuestion).length > 0 &&
@@ -68,7 +69,10 @@ const MainQuestionDisplay = ({ className }) => {
         <h2 className="display-5">React Question of the Day</h2>
         <h3>Current Question Present</h3>
         <StyledDailyQuestion dailyQuestion={currentQuestion} />
-        <TestingSection currentQuestion={currentQuestion} />
+        <TestingSection
+          currentQuestion={currentQuestion}
+          seenQuestionArray={seenQuestionArray}
+        />
       </div>
     )
   }

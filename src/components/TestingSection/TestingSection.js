@@ -5,12 +5,14 @@ import {
   addCurrentQuestionLocally,
   getCurrentQuestionLocally,
   showCurrentQuestionLocally,
-  getListOfQuestionsSeen,
   removeListOfQuestionsSeen,
   addSeenQuestionArrayLocally,
+  checkListOfQuestionsSeen,
 } from '../../utlils/localStorage'
 
-const TestingSection = ({ currentQuestion }) => {
+import { pushToSeenQuestionArray } from '../../utlils/questionArrays'
+
+const TestingSection = ({ currentQuestion, seenQuestionArray }) => {
   const testQuestionObject = {
     number: 2,
     question: 'What are the major features of React?',
@@ -50,7 +52,15 @@ const TestingSection = ({ currentQuestion }) => {
   }
 
   const handleGetSeenQArray = () => {
-    console.log(getListOfQuestionsSeen())
+    console.log(checkListOfQuestionsSeen())
+  }
+
+  const pushToSeenQArray = () => {
+    seenQuestionArray.push(currentQuestion)
+  }
+
+  const checkAndPushToArray = () => {
+    pushToSeenQuestionArray(currentQuestion, seenQuestionArray)
   }
 
   return (
@@ -63,20 +73,6 @@ const TestingSection = ({ currentQuestion }) => {
         }}
       >
         Console.log Current Question
-      </button>
-      <button
-        type="button"
-        className="btn btn-light"
-        onClick={() => addCurrentQuestionLocally(testQuestionObject4)}
-      >
-        Set Local Current Question
-      </button>
-      <button
-        type="button"
-        className="btn btn-light"
-        onClick={showCurrentQuestionLocally}
-      >
-        Console.log Local Current Question
       </button>
       <button
         type="button"
@@ -98,6 +94,29 @@ const TestingSection = ({ currentQuestion }) => {
         onClick={handleGetSeenQArray}
       >
         Get seen question array from local and console log
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={() => {
+          console.log(seenQuestionArray)
+        }}
+      >
+        Console.log seenQuestionArray
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={pushToSeenQArray}
+      >
+        Push to seenQuestionArray
+      </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={checkAndPushToArray}
+      >
+        Check if present in seenQuestionArray
       </button>
     </div>
   )
