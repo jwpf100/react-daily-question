@@ -55,17 +55,12 @@ const MainQuestionDisplay = ({ className }) => {
   }, [loading])
 
   // When currentQuesiton changes, add that question to local storage and to the seenquestion array
-
+  // When the seen question array gets updated, add to local storage
   useEffect(() => {
     addCurrentQuestionLocally(currentQuestion)
+    addSeenQuestionArrayLocally(seenQuestionArray)
     // setSeenQuestionArray(pushToArray(currentQuestion, seenQuestionArray))
   }, [currentQuestion])
-
-  // When the seen question array gets updated, add to local storage
-
-  useEffect(() => {
-    addSeenQuestionArrayLocally(seenQuestionArray)
-  }, [seenQuestionArray])
 
   if (
     Object.keys(currentQuestion).length > 0 &&
