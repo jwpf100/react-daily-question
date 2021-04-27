@@ -1,8 +1,4 @@
 /* eslint-disable no-nested-ternary */
-// 1
-/* Iterate through md file and determine max number */
-
-// Find question 1
 
 const setSearchTerm = number => {
   const searchTerm =

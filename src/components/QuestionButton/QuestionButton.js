@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const QuestionButton = ({ question, className, seen }) => {
-  const seenNotSeen = seen ? 'btn-success' : 'btn-secondary'
+const QuestionButton = ({ question, className, status }) => {
+  const seenNotSeen = status === 'seen' ? 'btn-success' : 'btn-secondary'
 
   return (
     <>
@@ -30,7 +30,7 @@ export default StyledQuestionButton
 QuestionButton.propTypes = {
   question: PropTypes.object,
   className: PropTypes.string,
-  seen: PropTypes.bool,
+  status: PropTypes.string,
 }
 
 QuestionButton.defaultProps = {}

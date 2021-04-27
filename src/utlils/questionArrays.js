@@ -30,22 +30,6 @@ const generateUniqueRandomQuestionNumber = (mdSource, array) => {
   }
 }
 
-// Get a new current question
-const newQuestion = (mdSource, setCurrentQuestion, seenQuestionArray) => {
-  const newQuestionNumber = generateUniqueRandomQuestionNumber(
-    mdSource,
-    seenQuestionArray
-  )
-  checkPresent(newQuestionNumber, seenQuestionArray)
-
-  setCurrentQuestion({
-    number: newQuestionNumber,
-    date: new Date(),
-    question: extractQuestionOnly(mdSource, newQuestionNumber),
-    markdown: extractMdQuestionAndAnswer(mdSource, newQuestionNumber),
-  })
-}
-
 // push to array unless already present
 
 const pushToArray = (question, array) => {
@@ -59,6 +43,32 @@ const pushToArray = (question, array) => {
     array.push(abridgedQuestion)
   }
   return array
+}
+
+// Get a new current question
+const newQuestion = (
+  mdSource,
+  setCurrentQuestion,
+  seenQuestionArray,
+  setSeenQuestionArray
+) => {
+  const newQuestionNumber = generateUniqueRandomQuestionNumber(
+    mdSource,
+    seenQuestionArray
+  )
+  // I think this is redundant due to adding the unique check in the function above
+  // checkPresent(newQuestionNumber, seenQuestionArray)
+
+  const questionToAdd = {
+    number: newQuestionNumber,
+    date: new Date(),
+    question: extractQuestionOnly(mdSource, newQuestionNumber),
+    markdown: extractMdQuestionAndAnswer(mdSource, newQuestionNumber),
+  }
+
+  setCurrentQuestion(questionToAdd)
+  const array = pushToArray(questionToAdd, seenQuestionArray)
+  setSeenQuestionArray(array)
 }
 
 export {

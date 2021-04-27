@@ -45,7 +45,12 @@ const MainQuestionDisplay = ({ className }) => {
       mdFile !== '' &&
       !checkCurrentQuestionDate(currentQuestion.date)
     ) {
-      newQuestion(mdFile, setCurrentQuestion, seenQuestionArray)
+      newQuestion(
+        mdFile,
+        setCurrentQuestion,
+        seenQuestionArray,
+        setSeenQuestionArray
+      )
     }
   }, [loading])
 
@@ -53,7 +58,7 @@ const MainQuestionDisplay = ({ className }) => {
 
   useEffect(() => {
     addCurrentQuestionLocally(currentQuestion)
-    setSeenQuestionArray(pushToArray(currentQuestion, seenQuestionArray))
+    // setSeenQuestionArray(pushToArray(currentQuestion, seenQuestionArray))
   }, [currentQuestion])
 
   // When the seen question array gets updated, add to local storage
@@ -75,6 +80,7 @@ const MainQuestionDisplay = ({ className }) => {
           setCurrentQuestion={setCurrentQuestion}
           mdSource={mdFile}
           seenQuestionArray={seenQuestionArray}
+          setSeenQuestionArray={setSeenQuestionArray}
         />
         <QuestionlistDisplay
           questionArray={allQuestionArray}

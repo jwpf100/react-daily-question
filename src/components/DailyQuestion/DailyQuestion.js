@@ -12,6 +12,7 @@ const DailyQuestion = ({
   setCurrentQuestion,
   mdSource,
   seenQuestionArray,
+  setSeenQuestionArray,
 }) => {
   const [questionOnly, setQuestionOnly] = useState(true)
 
@@ -35,7 +36,12 @@ const DailyQuestion = ({
         type="button"
         className="btn btn-light"
         onClick={() => {
-          newQuestion(mdSource, setCurrentQuestion, seenQuestionArray)
+          newQuestion(
+            mdSource,
+            setCurrentQuestion,
+            seenQuestionArray,
+            setSeenQuestionArray
+          )
         }}
       >
         Select New Question
@@ -70,4 +76,5 @@ DailyQuestion.propTypes = {
   setCurrentQuestion: PropTypes.func,
   mdSource: PropTypes.string,
   seenQuestionArray: PropTypes.array,
+  setSeenQuestionArray: PropTypes.func,
 }
