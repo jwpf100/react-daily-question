@@ -3,7 +3,17 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const QuestionButton = ({ question, className, status }) => {
-  const seenNotSeen = status === 'seen' ? 'btn-success' : 'btn-secondary'
+  let seenNotSeen = 'btn-secondary'
+  switch (status) {
+    case 'current':
+      seenNotSeen = 'btn-primary'
+      break
+    case 'seen':
+      seenNotSeen = 'btn-success'
+      break
+    default:
+      seenNotSeen = 'btn-secondary'
+  }
 
   return (
     <>

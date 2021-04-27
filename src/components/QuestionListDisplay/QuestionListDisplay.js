@@ -3,10 +3,18 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import StyledQuestionButton from '../QuestionButton/QuestionButton'
 
-const QuestionListDisplay = ({ questionArray, answeredArray, className }) => {
+const QuestionListDisplay = ({
+  questionArray,
+  answeredArray,
+  currentQuestion,
+  className,
+}) => {
   // compute based on state
   const seenStatus = newQuestion => {
     // Code
+    if (currentQuestion.question === newQuestion.question) {
+      return 'current'
+    }
     if (
       answeredArray.find(({ question }) => question === newQuestion.question)
     ) {
@@ -50,6 +58,7 @@ QuestionListDisplay.propTypes = {
   questionArray: PropTypes.array,
   answeredArray: PropTypes.array,
   className: PropTypes.string,
+  currentQuestion: PropTypes.object,
 }
 
 QuestionListDisplay.defaultProps = {}

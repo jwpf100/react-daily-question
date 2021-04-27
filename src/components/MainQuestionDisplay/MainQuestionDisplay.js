@@ -80,6 +80,7 @@ const MainQuestionDisplay = ({ className }) => {
         <QuestionlistDisplay
           questionArray={allQuestionArray}
           answeredArray={seenQuestionArray}
+          currentQuestion={currentQuestion}
         />
         <TestingSection
           currentQuestion={currentQuestion}
