@@ -1,11 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { checkLocalStorage } from '../../utlils/localStorage'
+import {
+  checkLocalStorage,
+  removeTotalListOfQuestions,
+} from '../../utlils/localStorage'
 
 import {
-  checkPresent,
   generateUniqueRandomQuestionNumber,
+  createAvailableQuestionsArray,
+  createTotalQuestionArray,
 } from '../../utlils/questionArrays'
 
 const TestingSection = ({
@@ -13,6 +17,8 @@ const TestingSection = ({
   seenQuestionArray,
   mdSource,
   questionArray,
+  maxNumber,
+  availableQuestionsArray,
 }) => {
   const testQuestionObject = {
     number: 2,
@@ -43,16 +49,28 @@ const TestingSection = ({
     checkLocalStorage()
   }
 
-  const handleCheckPresent = () => {
-    console.log(checkPresent(currentQuestion, seenQuestionArray))
+  const handleRemoveTotalList = () => {
+    removeTotalListOfQuestions()
   }
 
-  const handleUniqueNumber = () => {
-    console.log(generateUniqueRandomQuestionNumber(mdSource, seenQuestionArray))
+  const showAvailableQArray = () => {
+    console.log(availableQuestionsArray)
   }
 
-  const showQuestionArray = () => {
-    console.log(questionArray)
+  const handleCreateTotalQsArray = () => {
+    const totalQArray = createTotalQuestionArray(mdSource)
+    const missingQsArray = []
+    console.log(totalQArray)
+    for (let i = 0; i < totalQArray.length; i += 1) {
+      if (totalQArray[i].question === undefined) {
+        missingQsArray.push(totalQArray[i])
+        console.log(totalQArray[i])
+      }
+      /* if (totalQArray[i].number + 1 !== totalQArray[i + 1].number) {
+        missingQsArray.push(totalQArray[i])
+      } */
+    }
+    console.log(missingQsArray)
   }
 
   return (
@@ -85,23 +103,23 @@ const TestingSection = ({
       <button
         type="button"
         className="btn btn-light"
-        onClick={handleCheckPresent}
+        onClick={handleRemoveTotalList}
       >
-        CheckPresent
+        Remove Total List Questions
       </button>
       <button
         type="button"
         className="btn btn-light"
-        onClick={handleUniqueNumber}
+        onClick={showAvailableQArray}
       >
-        Generate Random handleUniqueNumber
+        Show Avalable Qs Array
       </button>
       <button
         type="button"
         className="btn btn-light"
-        onClick={showQuestionArray}
+        onClick={handleCreateTotalQsArray}
       >
-        Show Total Question Array
+        Create Total Qs Array
       </button>
     </div>
   )

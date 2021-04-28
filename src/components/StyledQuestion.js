@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
 
-import { createQuestionArray, searchMaxNumber } from '../utlils/utils'
+import { searchMaxNumber } from '../utlils/utils'
 import QuestionListDisplay from './QuestionListDisplay/QuestionListDisplay'
 
 const QuestionDiv = ({ className }) => {
@@ -45,10 +45,6 @@ const QuestionDiv = ({ className }) => {
     )
     const searchResult = mdFile.substring(indexOfSearch, indexOfEndSearch)
     setQuestionText(searchResult)
-  }
-
-  const createTotalQuestionArray = () => {
-    setTotalQuestionArray(createQuestionArray(mdFile))
   }
 
   const storeArrayLocally = () => {

@@ -8,18 +8,36 @@ import { newQuestion } from '../../utlils/questionArrays'
 
 const DailyQuestion = ({
   className,
-  dailyQuestion,
+  currentQuestion,
   setCurrentQuestion,
   mdSource,
   seenQuestionArray,
   setSeenQuestionArray,
+  availableQuestionsArray,
+  setAvailableQuestionsArray,
 }) => {
   const [questionOnly, setQuestionOnly] = useState(true)
 
   const questionMd = extractMdQuestionOnly(
-    dailyQuestion.markdown,
-    dailyQuestion.number
+    currentQuestion.markdown,
+    currentQuestion.number
   )
+
+  const handleGetNewQuestion = () => {
+    newQuestion(
+      mdSource,
+      setCurrentQuestion,
+      seenQuestionArray,
+      setSeenQuestionArray,
+      availableQuestionsArray,
+      setAvailableQuestionsArray
+    )
+  }
+
+  const handleResetSeenQuestions = () => {
+    setCurrentQuestion([currentQuestion])
+    setSeenQuestionArray([currentQuestion])
+  }
 
   return (
     <div className={[className].join('')}>
@@ -35,20 +53,20 @@ const DailyQuestion = ({
       <button
         type="button"
         className="btn btn-light"
-        onClick={() => {
-          newQuestion(
-            mdSource,
-            setCurrentQuestion,
-            seenQuestionArray,
-            setSeenQuestionArray
-          )
-        }}
+        onClick={handleGetNewQuestion}
       >
         Select New Question
       </button>
+      <button
+        type="button"
+        className="btn btn-light"
+        onClick={handleResetSeenQuestions}
+      >
+        Reset Seen Questions
+      </button>
       <ReactMarkdown
         plugins={[[gfm, { singleTilde: false }]]}
-        source={questionOnly ? questionMd : dailyQuestion.markdown}
+        source={questionOnly ? questionMd : currentQuestion.markdown}
       />
     </div>
   )
@@ -72,9 +90,11 @@ export default StyledDailyQuestion
 
 DailyQuestion.propTypes = {
   className: PropTypes.string,
-  dailyQuestion: PropTypes.object,
+  currentQuestion: PropTypes.object,
   setCurrentQuestion: PropTypes.func,
   mdSource: PropTypes.string,
   seenQuestionArray: PropTypes.array,
   setSeenQuestionArray: PropTypes.func,
+  availableQuestionsArray: PropTypes.array,
+  setAvailableQuestionsArray: PropTypes.func,
 }

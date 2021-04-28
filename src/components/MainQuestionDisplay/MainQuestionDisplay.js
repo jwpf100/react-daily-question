@@ -2,17 +2,23 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import FetchData from '../../hooks/FetchData'
-import {
-  checkCurrentQuestionDate,
-  createQuestionArray,
-} from '../../utlils/utils'
+import { checkCurrentQuestionDate, searchMaxNumber } from '../../utlils/utils'
 import {
   addCurrentQuestionLocally,
   getCurrentQuestionLocally,
   checkListOfQuestionsSeen,
   addSeenQuestionArrayLocally,
+  checkListOfAllQuestions,
+  addAllQuestionArrayLocally,
+  addAvailableQuestionArrayLocally,
+  checkListOfAvailableQuestions,
 } from '../../utlils/localStorage'
-import { newQuestion, pushToArray } from '../../utlils/questionArrays'
+import {
+  newQuestion,
+  pushToArray,
+  createTotalQuestionArray,
+  createAvailableQuestionsArray,
+} from '../../utlils/questionArrays'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 import TestingSection from '../TestingSection/TestingSection'
 import QuestionlistDisplay from '../QuestionListDisplay'
@@ -31,15 +37,21 @@ const MainQuestionDisplay = ({ className }) => {
   const [seenQuestionArray, setSeenQuestionArray] = useState(
     checkListOfQuestionsSeen()
   )
-  const [allQuestionArray, setAllQuestionArray] = useState([])
+  const [allQuestionArray, setAllQuestionArray] = useState([]) // REMOVE
+
+  const [availableQuestionsArray, setAvailableQuestionsArray] = useState(
+    checkListOfAvailableQuestions()
+  )
 
   // Check for loading to finish, mdFile to be populated, currentQuestion date to be DIFFERENT to current date (i.e. need a new question) and then set the current question to a new random question.
 
   useEffect(() => {
     if (!loading && mdFile !== '') {
-      setAllQuestionArray(createQuestionArray(mdFile))
+      setAvailableQuestionsArray(
+        createAvailableQuestionsArray(mdFile, seenQuestionArray)
+      )
     }
-
+    // Once mdFile has loaded, check if current question needs to be changed, then update curren and seen questions
     if (
       !loading &&
       mdFile !== '' &&
@@ -49,7 +61,9 @@ const MainQuestionDisplay = ({ className }) => {
         mdFile,
         setCurrentQuestion,
         seenQuestionArray,
-        setSeenQuestionArray
+        setSeenQuestionArray,
+        availableQuestionsArray,
+        setAvailableQuestionsArray
       )
     }
   }, [loading])
@@ -59,8 +73,13 @@ const MainQuestionDisplay = ({ className }) => {
   useEffect(() => {
     addCurrentQuestionLocally(currentQuestion)
     addSeenQuestionArrayLocally(seenQuestionArray)
-    // setSeenQuestionArray(pushToArray(currentQuestion, seenQuestionArray))
   }, [currentQuestion])
+
+  useEffect(() => {
+    addAvailableQuestionArrayLocally(availableQuestionsArray)
+  }, [availableQuestionsArray])
+
+  // Transact based on state:
 
   if (
     Object.keys(currentQuestion).length > 0 &&
@@ -71,14 +90,16 @@ const MainQuestionDisplay = ({ className }) => {
         <h2 className="display-5">React Question of the Day</h2>
         <h3>Current Question Present</h3>
         <StyledDailyQuestion
-          dailyQuestion={currentQuestion}
+          currentQuestion={currentQuestion}
           setCurrentQuestion={setCurrentQuestion}
           mdSource={mdFile}
           seenQuestionArray={seenQuestionArray}
           setSeenQuestionArray={setSeenQuestionArray}
+          availableQuestionsArray={availableQuestionsArray}
+          setAvailableQuestionsArray={setAvailableQuestionsArray}
         />
         <QuestionlistDisplay
-          questionArray={allQuestionArray}
+          availableArray={availableQuestionsArray}
           answeredArray={seenQuestionArray}
           currentQuestion={currentQuestion}
         />
@@ -86,6 +107,8 @@ const MainQuestionDisplay = ({ className }) => {
           currentQuestion={currentQuestion}
           seenQuestionArray={seenQuestionArray}
           mdSource={mdFile}
+          questionArray={allQuestionArray}
+          availableQuestionsArray={availableQuestionsArray}
         />
       </div>
     )
