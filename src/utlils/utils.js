@@ -1,8 +1,4 @@
 /* eslint-disable no-nested-ternary */
-// 1
-/* Iterate through md file and determine max number */
-
-// Find question 1
 
 const setSearchTerm = number => {
   const searchTerm =
@@ -21,6 +17,7 @@ const setMdSearchTerm = number => {
 
 const extractQuestionOnly = (mdSource, questionNumber) => {
   const startOfQuestions = mdSource.indexOf(setSearchTerm(1))
+
   const searchTerm = setSearchTerm(questionNumber)
   // Location of question start point (search term)
   const searchStartIndex = mdSource.indexOf(searchTerm) + searchTerm.length
@@ -65,9 +62,9 @@ const extractMdQuestionOnly = (mdSource, questionNumber) => {
 
 const extractMdQuestionAndAnswer = (mdSource, questionNumber) => {
   const mdSearchTerm = setMdSearchTerm(questionNumber)
-  console.log(``)
+
   const indexOfSearch = mdSource.indexOf(mdSearchTerm)
-  console.log(``)
+
   const indexOfEndSearch = mdSource.indexOf(
     `**[⬆ Back to Top](#table-of-contents)**`,
     indexOfSearch
@@ -102,69 +99,23 @@ const generateRandomQuestionNumber = mdSource => {
   return Math.floor(Math.random() * maxQuestionNo + 1)
 }
 
-// 2
-/* Create an array from MDData in the format:
-  [{1, 'What is React?'}, {2, What are the major features of React?}]
-*/
-
-const createQuestionArray = mdSource => {
-  const maxQuestion = parseInt(searchMaxNumber(mdSource), 10)
-  const startOfQuestions = mdSource.indexOf(setSearchTerm(1))
-  const questionArray = []
-  for (let i = 1; i < maxQuestion + 1; i += 1) {
-    const searchTerm = setSearchTerm(i)
-    // Location of question start point (search term)
-    const searchStartIndex = mdSource.indexOf(searchTerm) + searchTerm.length
-
-    // Check to see if the search term exists.  If it doesn't then it must have a lower index than the 1st question in the MD Doc (the search will return -1 + the length of the search)
-
-    if (searchStartIndex > startOfQuestions) {
-      // Location of first bracket in question
-      const questionStartPoint = mdSource.indexOf('[', searchStartIndex)
-
-      // Find closing bracket.  Use counter to ensure that there aren't brackets within the brackets I want to find. E.g.  [This is a question with brackets [inside] which wouldn't work if I just searched for the first closing bracket]
-
-      let counter = 0
-      let questionEndPoint = 0
-      let j = questionStartPoint - 1
-      do {
-        j += 1
-        switch (mdSource[j]) {
-          case '[':
-            counter += 1
-            break
-          case ']':
-            counter -= 1
-            break
-          default:
-        }
-        questionEndPoint = j
-      } while (counter !== 0)
-
-      // Define the question using the start (questionStartPoint) and end (questionEndPoint) points
-
-      const question = mdSource.slice(questionStartPoint + 1, questionEndPoint)
-
-      // Create the array
-
-      questionArray.push({ number: i, question })
-    }
-  }
-  return questionArray
-}
-
 const checkCurrentQuestionDate = date => {
   const checkDate = new Date(date).setHours(0, 0, 0, 0)
   const currentDate = new Date().setHours(0, 0, 0, 0)
   return checkDate === currentDate
 }
 
+// create an array of numbers between min and max (edges included)
+const range = (min, max) =>
+  Array.from({ length: max - min + 1 }, (_, i) => min + i)
+
 export {
-  createQuestionArray,
+  setSearchTerm,
   searchMaxNumber,
   checkCurrentQuestionDate,
   extractMdQuestionOnly,
   extractMdQuestionAndAnswer,
   generateRandomQuestionNumber,
   extractQuestionOnly,
+  range,
 }
