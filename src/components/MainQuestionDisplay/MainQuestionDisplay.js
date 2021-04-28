@@ -2,21 +2,17 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import FetchData from '../../hooks/FetchData'
-import { checkCurrentQuestionDate, searchMaxNumber } from '../../utlils/utils'
+import { checkCurrentQuestionDate } from '../../utlils/utils'
 import {
   addCurrentQuestionLocally,
   getCurrentQuestionLocally,
   checkListOfQuestionsSeen,
   addSeenQuestionArrayLocally,
-  checkListOfAllQuestions,
-  addAllQuestionArrayLocally,
   addAvailableQuestionArrayLocally,
   checkListOfAvailableQuestions,
 } from '../../utlils/localStorage'
 import {
   newQuestion,
-  pushToArray,
-  createTotalQuestionArray,
   createAvailableQuestionsArray,
 } from '../../utlils/questionArrays'
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
@@ -37,13 +33,12 @@ const MainQuestionDisplay = ({ className }) => {
   const [seenQuestionArray, setSeenQuestionArray] = useState(
     checkListOfQuestionsSeen()
   )
-  const [allQuestionArray, setAllQuestionArray] = useState([]) // REMOVE
-
+  // Set available question array initially from local storage
   const [availableQuestionsArray, setAvailableQuestionsArray] = useState(
     checkListOfAvailableQuestions()
   )
 
-  // Check for loading to finish, mdFile to be populated, currentQuestion date to be DIFFERENT to current date (i.e. need a new question) and then set the current question to a new random question.
+  // First when mdFile has been loaded, setAvailableQuestions using seenQuestionsArray
 
   useEffect(() => {
     if (!loading && mdFile !== '') {
@@ -51,7 +46,7 @@ const MainQuestionDisplay = ({ className }) => {
         createAvailableQuestionsArray(mdFile, seenQuestionArray)
       )
     }
-    // Once mdFile has loaded, check if current question needs to be changed, then update curren and seen questions
+    // Once mdFile has loaded, check if current question needs to be changed, then update current and seen questions
     if (
       !loading &&
       mdFile !== '' &&
@@ -75,11 +70,12 @@ const MainQuestionDisplay = ({ className }) => {
     addSeenQuestionArrayLocally(seenQuestionArray)
   }, [currentQuestion])
 
+  // When availableQuestionsArray changes, add that to local storage
   useEffect(() => {
     addAvailableQuestionArrayLocally(availableQuestionsArray)
   }, [availableQuestionsArray])
 
-  // Transact based on state:
+  // If there is a current question, display Main question display.  Fallbacks if data not present.
 
   if (
     Object.keys(currentQuestion).length > 0 &&
@@ -107,7 +103,6 @@ const MainQuestionDisplay = ({ className }) => {
           currentQuestion={currentQuestion}
           seenQuestionArray={seenQuestionArray}
           mdSource={mdFile}
-          questionArray={allQuestionArray}
           availableQuestionsArray={availableQuestionsArray}
         />
       </div>

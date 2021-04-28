@@ -35,7 +35,6 @@ const DailyQuestion = ({
   }
 
   const handleResetSeenQuestions = () => {
-    setCurrentQuestion([currentQuestion])
     setSeenQuestionArray([currentQuestion])
   }
 

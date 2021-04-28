@@ -1,10 +1,7 @@
 import {
-  checkCurrentQuestionDate,
-  generateRandomQuestionNumber,
   extractQuestionOnly,
   extractMdQuestionAndAnswer,
   searchMaxNumber,
-  setSearchTerm,
 } from './utils'
 
 // check ifPresentInArray

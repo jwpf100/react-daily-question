@@ -6,11 +6,7 @@ import {
   removeTotalListOfQuestions,
 } from '../../utlils/localStorage'
 
-import {
-  generateUniqueRandomQuestionNumber,
-  createAvailableQuestionsArray,
-  createTotalQuestionArray,
-} from '../../utlils/questionArrays'
+import { createTotalQuestionArray } from '../../utlils/questionArrays'
 
 const TestingSection = ({
   currentQuestion,
@@ -148,4 +144,9 @@ export default StyledTestingSection
 
 TestingSection.propTypes = {
   currentQuestion: PropTypes.object,
+  seenQuestionArray: PropTypes.array,
+  mdSource: PropTypes.string,
+  questionArray: PropTypes.array,
+  maxNumber: PropTypes.number,
+  availableQuestionsArray: PropTypes.array,
 }
