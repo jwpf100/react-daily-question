@@ -52,7 +52,8 @@ const pushToArray = (question, array) => {
 
 const createAvailableQuestionsArray = (mdSource, seenQuestionArray) => {
   const maxQuestionNo = parseInt(searchMaxNumber(mdSource), 10)
-  const availableQuestionArray = []
+  const availableQuestionsArray = []
+  console.log('create av. q array.  ')
   for (let i = 1; i < maxQuestionNo + 1; i += 1) {
     const questionToAdd = {
       number: i,
@@ -64,12 +65,12 @@ const createAvailableQuestionsArray = (mdSource, seenQuestionArray) => {
         ({ question }) => question === questionToAdd.question
       )
     ) {
-      availableQuestionArray.push(questionToAdd)
+      availableQuestionsArray.push(questionToAdd)
     }
 
     // If Yes, make sure that seen question number is correct (same as in mdfile)
   }
-  return availableQuestionArray
+  return availableQuestionsArray
 }
 
 // Get a new current question
@@ -81,15 +82,9 @@ const newQuestion = (
   availableQuestionsArray,
   setAvailableQuestionsArray
 ) => {
-  // const newQuestionNumber = generateUniqueRandomQuestionNumber(
-  //   mdSource,
-  //   seenQuestionArray
-  // )
   const newQuestionNumber = selectFromAvailableQuestions(
     availableQuestionsArray
   )
-  // I think this is redundant due to adding the unique check in the function above
-  // checkPresent(newQuestionNumber, seenQuestionArray)
 
   const questionToAdd = {
     number: newQuestionNumber,
@@ -108,7 +103,6 @@ const createTotalQuestionArray = mdSource => {
   const maxQuestion = parseInt(searchMaxNumber(mdSource), 10)
   const questionArray = []
   for (let i = 1; i < maxQuestion + 1; i += 1) {
-    // Add to the array
     questionArray.push({
       number: i,
       question: extractQuestionOnly(mdSource, i),

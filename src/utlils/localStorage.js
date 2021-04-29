@@ -5,6 +5,8 @@ const seenQuestionArray = 'seenQuestionArrayLocal'
 const totalQuestionArray = 'totalQuestionArrayLocal'
 const availableQuestionArray = 'availableQuestionArrayLocal'
 
+const isBrowser = typeof window !== 'undefined'
+
 const checkLocalStorage = () => {
   let _lsTotal = 0
   let _xLen
@@ -26,46 +28,61 @@ const checkLocalStorage = () => {
 // CURRENT QUESTION
 
 const addCurrentQuestionLocally = questionObject => {
-  window.localStorage.setItem(
-    currentQuestionLocal,
-    JSON.stringify(questionObject)
-  )
+  if (isBrowser) {
+    window.localStorage.setItem(
+      currentQuestionLocal,
+      JSON.stringify(questionObject)
+    )
+  }
 }
 
-const getCurrentQuestionLocally = () =>
-  JSON.parse(window.localStorage.getItem(currentQuestionLocal))
+const getCurrentQuestionLocally = () => {
+  if (isBrowser) {
+    const getCurrentQuestion = window.localStorage.getItem(currentQuestionLocal)
+    if (getCurrentQuestion === 'undefined') {
+      return {}
+    }
+    JSON.parse(window.localStorage.getItem(currentQuestionLocal))
+  }
+}
 
 // SEEN QUESTION ARRAY
 
 // GET
 
 const checkListOfQuestionsSeen = () => {
-  const getListOfQuestionsSeen = () =>
-    JSON.parse(window.localStorage.getItem(seenQuestionArray))
+  if (isBrowser) {
+    const getListOfQuestionsSeen = () =>
+      JSON.parse(window.localStorage.getItem(seenQuestionArray))
 
-  return getListOfQuestionsSeen() === null ? [] : getListOfQuestionsSeen()
+    return getListOfQuestionsSeen() === null ? [] : getListOfQuestionsSeen()
+  }
 }
-
 // SET
 
 const addSeenQuestionArrayLocally = array => {
-  window.localStorage.setItem(seenQuestionArray, JSON.stringify(array))
+  if (isBrowser) {
+    window.localStorage.setItem(seenQuestionArray, JSON.stringify(array))
+  }
 }
-
 // TOTAL QUESTION ARRAY
 
 // GET
 
 const checkListOfAllQuestions = () => {
-  const getListOfQuestionsSeen = () =>
-    JSON.parse(window.localStorage.getItem(totalQuestionArray))
+  if (isBrowser) {
+    const getListOfQuestionsSeen = () =>
+      JSON.parse(window.localStorage.getItem(totalQuestionArray))
 
-  return getListOfQuestionsSeen() === null ? [] : getListOfQuestionsSeen()
+    return getListOfQuestionsSeen() === null ? [] : getListOfQuestionsSeen()
+  }
 }
 
 // SET
 const addAllQuestionArrayLocally = array => {
-  window.localStorage.setItem(totalQuestionArray, JSON.stringify(array))
+  if (isBrowser) {
+    window.localStorage.setItem(totalQuestionArray, JSON.stringify(array))
+  }
 }
 
 // AVAILABLE QUESTION ARRAY
@@ -73,29 +90,41 @@ const addAllQuestionArrayLocally = array => {
 // GET
 
 const checkListOfAvailableQuestions = () => {
-  const getListOfAvailableQuestions = () =>
-    JSON.parse(window.localStorage.getItem(availableQuestionArray))
+  if (isBrowser) {
+    const getListOfAvailableQuestions = () =>
+      JSON.parse(window.localStorage.getItem(availableQuestionArray))
 
-  return getListOfAvailableQuestions() === null
-    ? []
-    : getListOfAvailableQuestions()
+    return getListOfAvailableQuestions() === null
+      ? []
+      : getListOfAvailableQuestions()
+  }
 }
 
 // SET
 const addAvailableQuestionArrayLocally = array => {
-  window.localStorage.setItem(availableQuestionArray, JSON.stringify(array))
+  if (isBrowser) {
+    window.localStorage.setItem(availableQuestionArray, JSON.stringify(array))
+  }
 }
 
 // For testing
 
-const removeListOfQuestionsSeen = () =>
-  window.localStorage.removeItem(seenQuestionArray)
+const removeListOfQuestionsSeen = () => {
+  if (isBrowser) {
+    window.localStorage.removeItem(seenQuestionArray)
+  }
+}
 
-const removeTotalListOfQuestions = () =>
-  window.localStorage.removeItem(totalQuestionArray)
+const removeTotalListOfQuestions = () => {
+  if (isBrowser) {
+    window.localStorage.removeItem(totalQuestionArray)
+  }
+}
 
 const showCurrentQuestionLocally = () => {
-  console.log(JSON.parse(window.localStorage.getItem(seenQuestionArray)))
+  if (isBrowser) {
+    console.log(JSON.parse(window.localStorage.getItem(seenQuestionArray)))
+  }
 }
 
 export {
