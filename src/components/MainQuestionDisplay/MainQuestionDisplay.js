@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import FetchData from '../../hooks/FetchData'
 import { checkCurrentQuestionDate } from '../../utlils/utils'
 import {
   addCurrentQuestionLocally,
-  getCurrentQuestionLocally,
-  checkListOfQuestionsSeen,
   addSeenQuestionArrayLocally,
   addAvailableQuestionArrayLocally,
-  checkListOfAvailableQuestions,
 } from '../../utlils/localStorage'
 import {
   newQuestion,
@@ -18,6 +15,7 @@ import {
 import StyledDailyQuestion from '../DailyQuestion/DailyQuestion'
 import TestingSection from '../TestingSection/TestingSection'
 import QuestionlistDisplay from '../QuestionListDisplay'
+import FetchLocalData from '../../hooks/FetchLocalData'
 
 const MainQuestionDisplay = ({ className }) => {
   const mdDocumentPath =
@@ -25,59 +23,60 @@ const MainQuestionDisplay = ({ className }) => {
 
   // Custom hook to bring in MD Data
   const { mdFile, loading, error } = FetchData(mdDocumentPath)
-  // Set current question initially from local storage
-  const [currentQuestion, setCurrentQuestion] = useState(
-    getCurrentQuestionLocally()
-  )
-  // Set seen question array initially from local storage
-  const [seenQuestionArray, setSeenQuestionArray] = useState(
-    checkListOfQuestionsSeen()
-  )
-  // Set available question array initially from local storage
-  const [availableQuestionsArray, setAvailableQuestionsArray] = useState(
-    checkListOfAvailableQuestions()
-  )
-
-  // First when mdFile has been loaded, setAvailableQuestions using seenQuestionsArray
+  const {
+    currentQuestion,
+    setCurrentQuestion,
+    seenQuestionArray,
+    setSeenQuestionArray,
+    availableQuestionsArray,
+    setAvailableQuestionsArray,
+    dataLocalStorage,
+  } = FetchLocalData(loading)
 
   useEffect(() => {
-    if (!loading && mdFile !== '') {
+    if (dataLocalStorage && !loading && mdFile !== '') {
       setAvailableQuestionsArray(
         createAvailableQuestionsArray(mdFile, seenQuestionArray)
       )
     }
-    // Once mdFile has loaded, check if current question needs to be changed, then update current and seen questions
-    if (
-      !loading &&
-      mdFile !== '' &&
-      !checkCurrentQuestionDate(currentQuestion.date)
-    ) {
-      newQuestion(
-        mdFile,
-        setCurrentQuestion,
-        seenQuestionArray,
-        setSeenQuestionArray,
-        availableQuestionsArray,
-        setAvailableQuestionsArray
-      )
-    }
   }, [loading])
 
-  // When currentQuesiton changes, add that question to local storage and to the seenquestion array
-  // When the seen question array gets updated, add to local storage
   useEffect(() => {
-    addCurrentQuestionLocally(currentQuestion)
-    addSeenQuestionArrayLocally(seenQuestionArray)
+    if (dataLocalStorage) {
+      addCurrentQuestionLocally(currentQuestion)
+      addSeenQuestionArrayLocally(seenQuestionArray)
+    }
   }, [currentQuestion])
 
   // When availableQuestionsArray changes, add that to local storage
   useEffect(() => {
-    addAvailableQuestionArrayLocally(availableQuestionsArray)
+    if (dataLocalStorage) {
+      addAvailableQuestionArrayLocally(availableQuestionsArray)
+      // Once mdFile has loaded, check if current question needs to be changed, then update current and seen questions
+      if (
+        dataLocalStorage &&
+        !loading &&
+        mdFile !== '' &&
+        !checkCurrentQuestionDate(currentQuestion.date)
+      ) {
+        newQuestion(
+          mdFile,
+          setCurrentQuestion,
+          seenQuestionArray,
+          setSeenQuestionArray,
+          availableQuestionsArray,
+          setAvailableQuestionsArray
+        )
+      }
+    }
   }, [availableQuestionsArray])
 
   // If there is a current question, display Main question display.  Fallbacks if data not present.
 
+  console.log(`current Question? = ${currentQuestion}`)
   if (
+    // Check if currentQuestion is defined first
+    currentQuestion &&
     Object.keys(currentQuestion).length > 0 &&
     checkCurrentQuestionDate(currentQuestion.date)
   ) {

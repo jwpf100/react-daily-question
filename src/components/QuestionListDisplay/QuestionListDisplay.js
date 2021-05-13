@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import StyledQuestionButton from '../QuestionButton/QuestionButton'
-import { range } from '../../utlils/utils'
+import { range } from '../../utlils/maths'
 
 const QuestionListDisplay = ({
   availableArray,
