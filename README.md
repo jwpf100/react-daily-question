@@ -14,11 +14,11 @@ Project will work in fundamentally the same way. MD document will be parsed to b
 
 ### Aims
 
-[ ] Unique question per day (not random, used seed data so that the quesiton for x is always the same)
-[ ] User can select new questions, either at random OR by clicking the question in a list
-[ ] Keep track of questions user has seen/not seen
+1. Unique question per day (not random, used seed data so that the quesiton for x is always the same)
+2. User can select new questions, either at random OR by clicking the question in a list
+3. Keep track of questions user has seen/not seen
 
 ### Future Aims
 
-[ ] Use database to store user information. Login and authentication.
-[ ] Update MD questions automatically from github (currently I manually save the MD file to github and it's accessed from there)
+1. Use database to store user information. Login and authentication.
+2. Update MD questions automatically from github (currently I manually save the MD file to github and it's accessed from there)
