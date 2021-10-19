@@ -22,3 +22,7 @@ Project will work in fundamentally the same way. MD document will be parsed to b
 
 1. Use database to store user information. Login and authentication.
 2. Update MD questions automatically from github (currently I manually save the MD file to github and it's accessed from there)
+
+### READING LIST
+
+Styling: https://www.freecodecamp.org/news/how-to-style-your-react-apps-with-less-code-using-tailwind-css-and-styled-components/
